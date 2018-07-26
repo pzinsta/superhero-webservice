@@ -6,6 +6,7 @@ import javax.persistence.Id;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Superhero {
@@ -74,5 +75,27 @@ public class Superhero {
 
     public void setFirstAppearance(LocalDate firstAppearance) {
         this.firstAppearance = firstAppearance;
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null || !(that instanceof Superhero)) {
+            return false;
+        }
+        Superhero superhero = (Superhero) that;
+        return Objects.equals(getName(), superhero.getName()) &&
+                Objects.equals(getPseudonym(), superhero.getPseudonym()) &&
+                Objects.equals(getPublisher(), superhero.getPublisher()) &&
+                Objects.equals(getSkills(), superhero.getSkills()) &&
+                Objects.equals(getAllies(), superhero.getAllies()) &&
+                Objects.equals(getFirstAppearance(), superhero.getFirstAppearance());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName(), getPseudonym(), getPublisher(), getSkills(), getAllies(), getFirstAppearance());
     }
 }
