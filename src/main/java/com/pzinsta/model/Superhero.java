@@ -1,24 +1,54 @@
 package com.pzinsta.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import static com.fasterxml.jackson.annotation.JsonProperty.Access.READ_ONLY;
 
 @Entity
 public class Superhero {
 
     @Id
     @GeneratedValue(generator = "ID_GENERATOR")
+    @JsonProperty(access = READ_ONLY)
     private Long id;
+
+    @NotBlank
+    @Size(max = 100)
     private String name;
+
+    @NotBlank
+    @Size(max = 100)
+    @Column(unique = true)
     private String pseudonym;
+
+    @NotBlank
+    @Size(max = 100)
     private String publisher;
-    private List<String> skills = new ArrayList<>();
-    private List<String> allies = new ArrayList<>();
+
+    @NotEmpty
+    @ElementCollection
+    private List<@NotBlank String> skills = new ArrayList<>();
+
+    @ElementCollection
+    private List<@NotBlank String> allies = new ArrayList<>();
+
+    @NotNull
+    @PastOrPresent
     private LocalDate firstAppearance;
 
     public Long getId() {

@@ -1,5 +1,6 @@
 package com.pzinsta.service;
 
+import com.google.common.collect.ImmutableList;
 import com.pzinsta.exception.SuperheroNotFoundException;
 import com.pzinsta.model.Superhero;
 import com.pzinsta.repository.SuperheroRepository;
@@ -12,14 +13,17 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
-import java.time.LocalDate;
-import java.time.Month;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import static com.pzinsta.util.Superheroes.batman;
+import static com.pzinsta.util.Superheroes.superman;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.BDDMockito.given;
@@ -30,7 +34,7 @@ public class SuperheroServiceTest {
 
     private final static Long SUPERHERO_ID = 42L;
 
-    private Superhero superman = createSuperman();
+    private Superhero superman = superman();
 
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
@@ -43,11 +47,12 @@ public class SuperheroServiceTest {
 
     @Captor
     private ArgumentCaptor<Superhero> superheroArgumentCaptor;
+    public static final String PSEUDONYM = "Superman";
 
     @Test
     public void shouldCreateSuperhero() throws Exception {
         // given
-        assumeThatRepositorySavesAndAssignsIdFor(superman);
+        givenThatRepositorySavesAndAssignsIdFor(superman);
 
         // when
         Superhero result = defaultSuperheroService.create(superman);
@@ -57,29 +62,72 @@ public class SuperheroServiceTest {
         assertThatServiceReturnedSuperheroFromRepositoryWithoutModifications(result);
     }
 
+    private void givenThatRepositorySavesAndAssignsIdFor(Superhero superman) {
+        when(superheroRepository.save(superman)).thenReturn(supermanWithId());
+    }
+
+    private void assertThatSuperheroPassedToRepositoryWasNotModified() {
+        verify(superheroRepository).save(superheroArgumentCaptor.capture());
+        assertThat(superheroArgumentCaptor.getValue()).isEqualTo(superman());
+    }
+
+    private void assertThatServiceReturnedSuperheroFromRepositoryWithoutModifications(Superhero result) {
+        assertThat(result).isEqualToComparingFieldByField(supermanWithId());
+    }
+
     @Test
     public void shouldFindAllSuperheroes() throws Exception {
         // given
-        List<Superhero> superheroes = Collections.singletonList(superman);
+        List<Superhero> superheroes = ImmutableList.of(superman(), batman());
         given(superheroRepository.findAll()).willReturn(superheroes);
 
         // when
         Iterable<Superhero> result = defaultSuperheroService.findAll();
 
         // then
-        assertThat(result).containsAll(superheroes);
+        assertThat(result).containsAll(ImmutableList.of(superman(), batman()));
+    }
+
+    @Test
+    public void shouldFindAllSuperheroesPaged() throws Exception {
+        // given
+        int pageNumber = 7;
+        int size = 50;
+        Pageable pageable = PageRequest.of(pageNumber, size);
+        Page<Superhero> page = new PageImpl<>(ImmutableList.of(superman(), batman()));
+
+        given(superheroRepository.findAll(pageable)).willReturn(page);
+
+        // when
+        Page<Superhero> result = defaultSuperheroService.findAll(pageable);
+
+        // then
+        assertThat(result).containsExactly(superman(), batman());
+    }
+
+    @Test
+    public void shouldFindAllSuperheroesSorted() throws Exception {
+        // given
+        Sort sort = Sort.by("firstAppearance").descending();
+        given(superheroRepository.findAll(sort)).willReturn(ImmutableList.of(batman(), superman()));
+
+        // when
+        Iterable<Superhero> result = defaultSuperheroService.findAll(sort);
+
+        // then
+        assertThat(result).containsExactly(batman(), superman());
     }
 
     @Test
     public void shouldFindById() throws Exception {
         // given
-        given(superheroRepository.findById(SUPERHERO_ID)).willReturn(Optional.of(superman));
+        given(superheroRepository.findById(SUPERHERO_ID)).willReturn(Optional.of(supermanWithId()));
 
         // when
         Superhero result = defaultSuperheroService.findById(SUPERHERO_ID);
 
         // then
-        assertThat(result).isEqualTo(superman);
+        assertThat(result).isEqualToComparingFieldByField(supermanWithId());
     }
 
     @Test
@@ -94,37 +142,58 @@ public class SuperheroServiceTest {
         assertThat(result).isInstanceOf(SuperheroNotFoundException.class);
     }
 
-    private void assumeThatRepositorySavesAndAssignsIdFor(Superhero superman) {
-        when(superheroRepository.save(superman)).thenReturn(createSupermanWithId());
+    @Test
+    public void shouldFindByPseudonym() throws Exception {
+        // given
+        given(superheroRepository.findByPseudonym(PSEUDONYM)).willReturn(Optional.ofNullable(supermanWithId()));
+
+        // when
+        Superhero result = defaultSuperheroService.findByPseudonym(PSEUDONYM);
+
+        // then
+        assertThat(result).isEqualToComparingFieldByField(supermanWithId());
     }
 
-    private Superhero createSupermanWithId() {
-        Superhero supermanWithId = createSuperman();
+    @Test
+    public void shouldThrowExceptionWhenCannotFindByPseudonym() throws Exception {
+        // given
+        given(superheroRepository.findByPseudonym(PSEUDONYM)).willReturn(Optional.empty());
+
+        // when
+        Throwable result = catchThrowable(() -> defaultSuperheroService.findByPseudonym(PSEUDONYM));
+
+        // then
+        assertThat(result).isInstanceOf(SuperheroNotFoundException.class);
+    }
+
+    @Test
+    public void shouldReturnTrueIfSuperheroExistsByPseudonym() throws Exception {
+        // given
+        given(superheroRepository.existsByPseudonym(PSEUDONYM)).willReturn(true);
+
+        // when
+        boolean result = defaultSuperheroService.existsByPseudonym(PSEUDONYM);
+
+        // then
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    public void shouldReturnFalseIfSuperheroDoesNotExistByPseudonym() throws Exception {
+        // given
+        given(superheroRepository.existsByPseudonym(PSEUDONYM)).willReturn(false);
+
+        // when
+        boolean result = defaultSuperheroService.existsByPseudonym(PSEUDONYM);
+
+        // then
+        assertThat(result).isFalse();
+    }
+
+    private Superhero supermanWithId() {
+        Superhero supermanWithId = superman();
         supermanWithId.setId(SUPERHERO_ID);
         return supermanWithId;
-    }
-
-    private void assertThatSuperheroPassedToRepositoryWasNotModified() {
-        verify(superheroRepository).save(superheroArgumentCaptor.capture());
-        assertThat(superheroArgumentCaptor.getValue()).isEqualTo(superman);
-    }
-
-    private void assertThatServiceReturnedSuperheroFromRepositoryWithoutModifications(Superhero result) {
-        assertThat(result.getId()).isEqualTo(SUPERHERO_ID);
-        assertThat(result).isEqualTo(superman);
-    }
-
-    private static Superhero createSuperman() {
-        Superhero superman = new Superhero();
-        superman.setName("Clark Kent");
-        superman.setPseudonym("Superman");
-        superman.setPublisher("DC Comics");
-        superman.setSkills(Arrays.asList(
-                "Superhuman strength, speed, and durability", "Flight", "Heat vision",
-                "Freezing breath", "X-ray vision", "Telescopic & microscopic vision"));
-        superman.setAllies(Arrays.asList("Supergirl", "Superboy", "Superdog", "Power Girl"));
-        superman.setFirstAppearance(LocalDate.of(1938, Month.APRIL, 18));
-        return superman;
     }
 
 }
