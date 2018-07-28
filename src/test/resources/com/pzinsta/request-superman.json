@@ -1,0 +1,20 @@
+{
+  "name": "Clark Kent",
+  "pseudonym": "Superman",
+  "publisher": "DC Comics",
+  "skills": [
+    "Superhuman strength, speed, and durability",
+    "Flight",
+    "Heat vision",
+    "Freezing breath",
+    "X-ray vision",
+    "Telescopic & microscopic vision"
+  ],
+  "allies": [
+    "Supergirl",
+    "Superboy",
+    "Superdog",
+    "Power Girl"
+  ],
+  "firstAppearance": "1938-04-18"
+}

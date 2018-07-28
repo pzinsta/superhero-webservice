@@ -58,7 +58,7 @@ public class SuperheroController {
         return superheroService.findAll(pageable);
     }
 
-    @GetMapping(params = "sort")
+    @GetMapping(params = {"sort", "!page"})
     public Iterable<Superhero> findAll(Sort sort) {
         return superheroService.findAll(sort);
     }

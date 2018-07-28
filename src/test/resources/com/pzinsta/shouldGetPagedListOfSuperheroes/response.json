@@ -1,0 +1,90 @@
+{
+  "content": [
+    {
+      "id": 1000,
+      "name": "Clark Kent",
+      "pseudonym": "Superman",
+      "publisher": "DC Comics",
+      "skills": [
+        "Superhuman strength, speed, and durability",
+        "Flight",
+        "Heat vision",
+        "Freezing breath",
+        "X-ray vision",
+        "Telescopic & microscopic vision"
+      ],
+      "allies": [
+        "Supergirl",
+        "Superboy",
+        "Superdog",
+        "Power Girl"
+      ],
+      "firstAppearance": "1938-04-18"
+    },
+    {
+      "id": 1001,
+      "name": "Steven Rogers",
+      "pseudonym": "Captain America",
+      "publisher": "Marvel Comics",
+      "skills": [
+        "Peak human strength, speed, durability, agility, reflexes, senses, and mental processing",
+        "Master martial artist and hand-to-hand combatant",
+        "Accelerated healing factor",
+        "Expert tactician, strategist, and field commander",
+        "Wields vibranium-steel alloy shield"
+      ],
+      "allies": [
+        "Falcon",
+        "Black Widow",
+        "Nomad",
+        "Free Spirit",
+        "Demolition Man"
+      ],
+      "firstAppearance": "1941-03-01"
+    },
+    {
+      "id": 1002,
+      "name": "Bruce Wayne",
+      "pseudonym": "Batman",
+      "publisher": "DC Comics",
+      "skills": [
+        "Genius-level intellect",
+        "Expert detective",
+        "Peak human physical condition",
+        "Skilled martial artist and hand-to-hand combatant",
+        "Expert detective",
+        "Utilizes high-tech equipment and weapons"
+      ],
+      "allies": [
+        "Robin",
+        "Superman",
+        "Wonder Woman",
+        "Catwoman",
+        "Batgirl"
+      ],
+      "firstAppearance": "1939-03-01"
+    }
+  ],
+  "pageable": {
+    "sort": {
+      "sorted": false,
+      "unsorted": true
+    },
+    "offset": 0,
+    "pageSize": 20,
+    "pageNumber": 0,
+    "paged": true,
+    "unpaged": false
+  },
+  "last": true,
+  "totalElements": 3,
+  "totalPages": 1,
+  "size": 20,
+  "number": 0,
+  "sort": {
+    "sorted": false,
+    "unsorted": true
+  },
+  "numberOfElements": 3,
+  "first": true
+}

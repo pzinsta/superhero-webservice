@@ -1,0 +1,48 @@
+{
+  "content": [
+    {
+      "id": 1002,
+      "name": "Bruce Wayne",
+      "pseudonym": "Batman",
+      "publisher": "DC Comics",
+      "skills": [
+        "Genius-level intellect",
+        "Expert detective",
+        "Peak human physical condition",
+        "Skilled martial artist and hand-to-hand combatant",
+        "Expert detective",
+        "Utilizes high-tech equipment and weapons"
+      ],
+      "allies": [
+        "Robin",
+        "Superman",
+        "Wonder Woman",
+        "Catwoman",
+        "Batgirl"
+      ],
+      "firstAppearance": "1939-03-01"
+    }
+  ],
+  "pageable": {
+    "sort": {
+      "sorted": true,
+      "unsorted": false
+    },
+    "offset": 1,
+    "pageSize": 1,
+    "pageNumber": 1,
+    "paged": true,
+    "unpaged": false
+  },
+  "last": false,
+  "totalElements": 3,
+  "totalPages": 3,
+  "size": 1,
+  "number": 1,
+  "sort": {
+    "sorted": true,
+    "unsorted": false
+  },
+  "numberOfElements": 1,
+  "first": false
+}

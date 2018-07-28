@@ -1,0 +1,21 @@
+{
+  "name": "Bruce Wayne",
+  "pseudonym": "Batman",
+  "publisher": "DC Comics",
+  "skills": [
+    "Genius-level intellect",
+    "Expert detective",
+    "Peak human physical condition",
+    "Skilled martial artist and hand-to-hand combatant",
+    "Expert detective",
+    "Utilizes high-tech equipment and weapons"
+  ],
+  "allies": [
+    "Robin",
+    "Superman",
+    "Wonder Woman",
+    "Catwoman",
+    "Batgirl"
+  ],
+  "firstAppearance": "1939-03-01"
+}

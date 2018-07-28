@@ -1,0 +1,47 @@
+{
+  "content": [
+    {
+      "id": 1001,
+      "name": "Steven Rogers",
+      "pseudonym": "Captain America",
+      "publisher": "Marvel Comics",
+      "skills": [
+        "Peak human strength, speed, durability, agility, reflexes, senses, and mental processing",
+        "Master martial artist and hand-to-hand combatant",
+        "Accelerated healing factor",
+        "Expert tactician, strategist, and field commander",
+        "Wields vibranium-steel alloy shield"
+      ],
+      "allies": [
+        "Falcon",
+        "Black Widow",
+        "Nomad",
+        "Free Spirit",
+        "Demolition Man"
+      ],
+      "firstAppearance": "1941-03-01"
+    }
+  ],
+  "pageable": {
+    "sort": {
+      "sorted": false,
+      "unsorted": true
+    },
+    "offset": 1,
+    "pageSize": 1,
+    "pageNumber": 1,
+    "paged": true,
+    "unpaged": false
+  },
+  "last": false,
+  "totalElements": 3,
+  "totalPages": 3,
+  "size": 1,
+  "number": 1,
+  "sort": {
+    "sorted": false,
+    "unsorted": true
+  },
+  "numberOfElements": 1,
+  "first": false
+}
