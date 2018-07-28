@@ -35,8 +35,6 @@ public class SuperheroServiceTest {
     private final static Long SUPERHERO_ID = 42L;
     private static final String PSEUDONYM = "Superman";
 
-    private Superhero superman = superman();
-
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
 
@@ -52,6 +50,7 @@ public class SuperheroServiceTest {
     @Test
     public void shouldCreateSuperhero() throws Exception {
         // given
+        Superhero superman = superman();
         givenThatRepositorySavesAndAssignsIdFor(superman);
 
         // when
@@ -62,8 +61,8 @@ public class SuperheroServiceTest {
         assertThatServiceReturnedSuperheroFromRepositoryWithoutModifications(result);
     }
 
-    private void givenThatRepositorySavesAndAssignsIdFor(Superhero superman) {
-        when(superheroRepository.save(superman)).thenReturn(supermanWithId());
+    private void givenThatRepositorySavesAndAssignsIdFor(Superhero superhero) {
+        when(superheroRepository.save(superhero)).thenReturn(supermanWithId());
     }
 
     private void assertThatSuperheroPassedToRepositoryWasNotModified() {
