@@ -43,7 +43,7 @@ import static org.springframework.web.util.UriComponentsBuilder.fromUriString;
 
 @Category(IntegrationTests.class)
 @RunWith(SpringRunner.class)
-@WebMvcTest(SuperheroController.class)
+@WebMvcTest(controllers = SuperheroController.class, secure = false)
 @EnableSpringDataWebSupport
 public class SuperheroControllerTest {
 
