@@ -33,6 +33,7 @@ import static org.mockito.Mockito.when;
 public class SuperheroServiceTest {
 
     private final static Long SUPERHERO_ID = 42L;
+    private static final String PSEUDONYM = "Superman";
 
     private Superhero superman = superman();
 
@@ -47,7 +48,6 @@ public class SuperheroServiceTest {
 
     @Captor
     private ArgumentCaptor<Superhero> superheroArgumentCaptor;
-    public static final String PSEUDONYM = "Superman";
 
     @Test
     public void shouldCreateSuperhero() throws Exception {
