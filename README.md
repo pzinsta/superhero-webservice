@@ -12,7 +12,7 @@ POST | /superheroes | - | - | /superheroes | Create a superhero
 <details>
 <summary>Sample body</summary>
 
-```javascript
+```json
 {
   "name": "Clark Kent",
   "pseudonym": "Superman",
@@ -35,7 +35,7 @@ POST | /superheroes | - | - | /superheroes | Create a superhero
 }
 ```
 
-</detail>
+</details>
 
 ## Run
 
