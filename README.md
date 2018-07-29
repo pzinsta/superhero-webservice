@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/pzinsta/superhero-webservice.svg?branch=master)](https://travis-ci.org/pzinsta/superhero-webservice)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=com.pzinsta%3Asuperhero-webservice&metric=coverage)](https://sonarcloud.io/dashboard?id=com.pzinsta%3Asuperhero-webservice)
+
 # Superhero RESTful Webservice
 
 Method | URL | Required Parameters | Optional Parameters | Example | Description
