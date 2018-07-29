@@ -112,7 +112,7 @@ public class Superhero {
         if (this == that) {
             return true;
         }
-        if (that == null || !(that instanceof Superhero)) {
+        if (!(that instanceof Superhero)) {
             return false;
         }
         Superhero superhero = (Superhero) that;
